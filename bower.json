@@ -1,0 +1,29 @@
+{
+  "name": "Ghost theme development",
+  "version": "0.0.1",
+  "authors": [
+    "chj1axr0 <chj1axr0@gmail.com>"
+  ],
+  "description": "Development setup for Ghost themes",
+  "main": "gulp.js",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "Ghost",
+    "Theme",
+    "Development"
+  ],
+  "license": "Unlicense",
+  "homepage": "https://",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "foundation": "~5.5.2"
+  }
+}
