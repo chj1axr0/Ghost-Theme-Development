@@ -5,7 +5,7 @@
     "chj1axr0 <chj1axr0@gmail.com>"
   ],
   "description": "Development setup for Ghost themes",
-  "main": "gulp.js",
+  "main": "gulpfile.js",
   "moduleType": [
     "node"
   ],

@@ -39,4 +39,7 @@
     "main-bower-files": "^2.9.0"
   },
   "readme": "readme.md",
+  "repository": "https://github.com/chj1axr0/Ghost-Theme-Development",
+  "dependencies": {
+  }
 }
