@@ -1,4 +1,4 @@
-# TF2Stadium ghost theme developer enviroment
+# Ghost theme development
 
 <!-- MarkdownTOC -->
 
