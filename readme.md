@@ -27,8 +27,10 @@ Comes with three gulp tasks:
 * `gulp dist` minifies, concats and compresses the theme in `build/`_`theme-name`_`.zip`.
 
 ## Thanks
+This is based on:
+https://github.com/TF2Stadium/Ghost-Environment/tree/master
 
-The project is based on:
+which in turn is based on:
 http://blog.dunkelstern.de/2014/11/02/developing-ghost-templates/
 
 Which has a repository at:
