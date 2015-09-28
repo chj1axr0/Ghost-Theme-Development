@@ -14,7 +14,7 @@
   "author": "Chj1axr0",
   "license": "Unlicense",
   "devDependencies": {
-    "ghost": "^0.7.0",
+    "ghost": "^0.7.1",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^1.0.1",
     "gulp-concat": "^2.4.1",

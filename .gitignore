@@ -1,7 +1,7 @@
 node_modules
 *.map
+/content/*
 src
-content/data/*
 bower_components
 *.sublime-gulp.cache
 /content/themes/*
