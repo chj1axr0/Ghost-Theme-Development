@@ -1,6 +1,5 @@
 node_modules
 *.map
-/content/*
 src
 bower_components
 *.sublime-gulp.cache
