@@ -1,8 +1,9 @@
 var gulp = require('gulp');
+var	rename    = require('gulp-rename'); // to rename any file
+var dedupe = require('gulp-dedupe');
 var plugins = require('gulp-load-plugins')();
 plugins.minifyCSS = require('gulp-minify-css'); // does not autoload
 plugins.gulpif = require('gulp-if'); // does not autoload
-plugins.mainBowerFiles = require('main-bower-files');
 plugins.filter = require('gulp-filter');
 plugins.uglify = require('gulp-uglify');
 plugins.symlink = require('gulp-symlink');
@@ -34,47 +35,29 @@ function endsWith(str, suffix) {
 }
 
 //
-// compile scss files and emit normal version + source map and a
+// compile sass files and emit normal version + source map and a
 // minified version
 //
 gulp.task('sass', function () {
-	gulp.src('./src/css/main.scss')
+	gulp.src('./src/assets/css/sass/styles.scss')
 		.pipe(plugins.plumber(onError))
-		.pipe(plugins.sourcemaps.init())
 		.pipe(plugins.sass())
 		.pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 9', 'opera 12.1'))
-		.pipe(plugins.sourcemaps.write('.'))
+		.pipe(dedupe()) // Remove duplicates from previous tasks (if any).
+		.pipe(rename('style.css'))
 		.pipe(gulp.dest(themePath + '/assets/css'))
 });
 
 gulp.task('sass_minify', function () {
-	gulp.src('./src/css/main.scss')
+	gulp.src('./src/assets/css/sass/styles.scss')
 		.pipe(plugins.sass())
 		.pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 9', 'opera 12.1'))
+		.pipe(dedupe()) // Remove duplicates from previous tasks (if any).
 		.pipe(plugins.minifyCSS())
+		.pipe(rename('style.min.css'))
 		.pipe(gulp.dest(themePath + '/assets/css'))
 });
 
-//
-// concat all javascript files to site.js
-//
-gulp.task('js', function () {
-	gulp.src(plugins.mainBowerFiles().concat('./src/js/*.js'))
-		.pipe(plugins.filter('*.js'))
-        .pipe(plugins.plumber(onError))
-		.pipe(plugins.sourcemaps.init())
-		.pipe(plugins.concat('site.js'))
-		.pipe(plugins.sourcemaps.write('.'))
-		.pipe(gulp.dest(themePath + '/assets/js'))
-});
-
-gulp.task('js_minify', function () {
-	gulp.src(plugins.mainBowerFiles().concat('./src/js/*.js'))
-		.pipe(plugins.filter('*.js'))
-        .pipe(plugins.uglify())
-		.pipe(plugins.concat('site.js'))
-		.pipe(gulp.dest(themePath + '/assets/js'))
-});
 
 
 //
@@ -92,7 +75,7 @@ gulp.task('templates_livereload', function() {
 			}
 		);
 
-	gulp.src('./src/templates/**/*.hbs')
+	gulp.src('./src/**/*.hbs')
 		.pipe(plugins.plumber(onError))
 		.pipe(plugins.gulpif(function (file) {
 				return endsWith(file.path, "default.hbs");
@@ -102,7 +85,7 @@ gulp.task('templates_livereload', function() {
 });
 
 gulp.task('templates', function() {
-	gulp.src('./src/templates/**/*.hbs')
+	gulp.src('./src/**/*.hbs')
 		.pipe(gulp.dest(themePath))
 });
 
@@ -110,8 +93,16 @@ gulp.task('templates', function() {
 // copy images over
 //
 gulp.task('images', function() {
-	gulp.src('./src/images/*')
+	gulp.src('./src/assets/images/*')
 		.pipe(gulp.dest(themePath + '/assets/images'))
+});
+
+//
+// copy javascript files over
+//
+gulp.task('js', function() {
+	gulp.src('./src/assets/js/**/*.js')
+		.pipe(gulp.dest(themePath + '/assets/js'))
 });
 
 //
@@ -126,7 +117,7 @@ gulp.task('root-files', function() {
 // copy font files over
 //
 gulp.task('fonts', function() {
-	gulp.src('./src/fonts/*.{eot,svg,ttf,woff,otf}')
+	gulp.src('./src/assets/fonts/*.{eot,svg,ttf,woff,otf}')
 		.pipe(gulp.dest(themePath + '/assets/fonts'));
 });
 
@@ -145,16 +136,16 @@ gulp.task ('symlinkTask', function() {
 // just run a live reload server and watch files for changes
 //
 gulp.task('livereload',
-          ['sass', 'js', 'templates_livereload', 'fonts', 'root-files', 'images', 'symlinkTask'],
+          ['sass','sass_minify', 'js', 'templates_livereload', 'fonts', 'root-files', 'images', 'symlinkTask'],
           function() {
 	reloader = plugins.livereload("0.0.0.0:35729");
-
-	gulp.watch('./src/css/**/*.scss', ['sass']);
-	gulp.watch('./src/templates/**/*.hbs', ['templates_livereload']);
-	gulp.watch('./src/fonts/*.{eot,svg,ttf,woff,otf}', ['fonts']);
-	gulp.watch('./src/*', ['root-files']);
-	gulp.watch('./src/js/*.js', ['js']);
-	gulp.watch('./src/images/*', ['images']);
+	gulp.watch('./src/assets/css/sass/styles.scss', ['sass']);
+	gulp.watch('./src/assets/css/sass/styles.scss', ['sass_minify']);
+	gulp.watch('./src/**/*.hbs', ['templates_livereload']);
+	gulp.watch('./src/assets/fonts/*.{eot,svg,ttf,woff,otf}', ['fonts']);
+	gulp.watch('./src/**/*.*', ['root-files']);
+	gulp.watch('./src/assets/js/*.js', ['js']);
+	gulp.watch('./src/assets/images/*', ['images']);
 
 	gulp.watch(themePath + '/**/*.css').on('change', function(file) {
 		reloader.changed(file.path);

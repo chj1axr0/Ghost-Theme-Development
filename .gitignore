@@ -1,8 +1,9 @@
-bower_components
-build
 node_modules
-src
-.sublime-gulp.cache
-*.sublime-workspace
 *.map
+src
+/content/themes/*
+bower_components
+*.sublime-gulp.cache
+*.sublime-workspace
 npm-debug.log
+build
