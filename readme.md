@@ -12,10 +12,9 @@
 
 1. Install [nodejs](http://nodejs.org).
 2. Install [gulp](http://gulpjs.com): `npm install -g gulp`
-3. Install [bower](http://bower.io): `npm install -g bower`
 4. Navigate into your directory.
-5. Execute `npm install` and `bower install`
-6. Execute `git clone https://github.com/TF2Stadium/Ghost-Theme src`
+5. Execute `npm install`
+6. Execute `git clone git@github.com:chj1axr0/Ghost-Blank.git src`
 7. Execute `gulp livereload` and open `localhost:2368` in your browser.
 
 ## Gulp tasks
