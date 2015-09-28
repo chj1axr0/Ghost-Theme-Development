@@ -1,9 +1,10 @@
 node_modules
 *.map
 src
-/content/themes/*
+content/data/*
 bower_components
 *.sublime-gulp.cache
+/content/themes/*
 *.sublime-workspace
 npm-debug.log
 build
